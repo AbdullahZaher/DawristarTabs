@@ -1,1 +1,37 @@
-<ion-content id="page7" style="background-color:#FFFFFF;"></ion-content>
+<ion-header color="dark">
+<ion-toolbar color="dark">
+    <ion-segment [(ngModel)]="selectThe">
+    <ion-segment-button value="news">
+        اخبار
+    </ion-segment-button>
+    <ion-segment-button value="article">
+        مقالات
+    </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
+</ion-header>
+
+<ion-content id="page7" class="ion-content">
+<div *ngFor="let segmentitem of getItems(selectThe)">
+    <div [hidden]=segmentitem.hide>
+
+    <ion-list *ngIf="segmentitem.col == 'newsitems'">
+        <ion-item class="ion-item" *ngFor="let item of newsitems | async" (click)="showNewsInfo(item)">
+          <img [src]="item.img" width="100px" height="90px" item-start>
+          <h1 text-wrap>{{item.title}}</h1>
+        </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="segmentitem.col == 'artitems'">
+        <ion-item class="ion-item" *ngFor="let item of artitems | async">
+            <img [src]="item.img" (click)="showTopicInfo(item)" width="100px" height="90px" item-start>
+            <h1 text-wrap>{{item.title}}</h1>
+            <p>
+                <span class="writer">{{ item.author }}</span> <span class="time"> {{ item.date | amLocale:'ar-sa' | amTimeAgo }}</span>
+            </p>
+        </ion-item>
+    </ion-list>
+
+    </div>
+</div>
+</ion-content>

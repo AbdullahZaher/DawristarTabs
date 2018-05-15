@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { environment } from '../environments/environment';
 
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { HomePage } from '../pages/home/home';
@@ -14,6 +15,15 @@ import { MediaPage } from '../pages/media/media';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+// Connect app with Firebase
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+
+// Moment
+import { MomentModule } from 'ngx-moment';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +37,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(environment.firebaseconfig),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,6 +56,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
+    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

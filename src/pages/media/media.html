@@ -1,1 +1,7 @@
-<ion-content id="page8" style="background-color:#FFFFFF;"></ion-content>
+<ion-content id="page8" class="ion-content">
+<div class="masonry">
+    <div class="item" *ngFor="let media of medias">
+        <img [src]="media.img">
+    </div>
+</div>
+</ion-content>

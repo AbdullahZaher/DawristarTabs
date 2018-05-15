@@ -1,35 +1,98 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Slides } from 'ionic-angular';
+// Connect Page with Firebase
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+import * as moment from 'moment';
+
+// News interface
+interface Newsinf {
+  title: string;
+  img: string;
+  slideImg: string;
+  keywords: string;
+  desc: string;
+  newsAuthor: string;
+  newsDate: string;
+  text: string;
+  isShown: boolean;
+  isSlide: boolean;
+  newsViews: number;
+  newsLikes: number;
+  id?: any;
+}
+// Matches interface
+interface Matinf {
+  league: string;
+  home: string;
+  home_bdg: string;
+  away: string;
+  away_bdg: string;
+  day: string;
+  time: string;
+  field: string;
+  ref: string;
+  tv: string;
+  comm: string;
+  tag: string;
+}
+
+let now = moment().format('YYYY-MM-DD');
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
+
 export class HomePage {
-  // this tells the tabs component which Pages
-  // should be each tab's root Page
-  constructor(public navCtrl: NavController, public navParams: NavParams, public statBar: StatusBar, public platform: Platform) {
-    this.platform= platform;
-    this.platform.ready().then( () => {
-      this.statBar.overlaysWebView(true);
-      this.statBar.backgroundColorByHexString('#D1E390');
+  @ViewChild(Slides) slides: Slides;
+
+  newsCol: AngularFirestoreCollection<Newsinf>;
+  items: Observable<Newsinf[]>;
+  title: string;
+  img: string;
+  slideImg: string;
+  keywords: string;
+  desc: string;
+  newsAuthor: string;
+  newsDate: string;
+  text: string;
+  isShown: boolean;
+  isSlide: boolean;
+  newsViews: number;
+  newsLikes: number;
+
+  matchesCol: AngularFirestoreCollection<Matinf>;
+  matchitems: Observable<Matinf[]>;
+  league: string;
+  home: string;
+  home_bdg: string;
+  away: string;
+  away_bdg: string;
+  day: string;
+  time: string;
+  field: string;
+  ref: string;
+  tv: string;
+  comm: string;
+  tag: string;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, public afs: AngularFirestore) {}
+
+  ngOnInit() {
+    this.newsCol = this.afs.collection('news', ref => {
+      return ref.orderBy('newsDate', 'desc')
     });
+    this.items = this.newsCol.valueChanges();
+
+    this.matchesCol = this.afs.collection('matches', ref => {
+      return ref.where('day', '==', now)
+    });
+    this.matchitems = this.matchesCol.valueChanges();
   }
-  
-  ttt = [
-    {
-      slideimg: 'https://c.top4top.net/p_833ca73o1.jpg',
-      title: 'هازارد: نسعى لإمتاع جماهير بلجيكا أمام السعودية',
-    },
-    {
-      slideimg: 'https://f.top4top.net/p_861idh8r1.jpg',
-      title: 'عكس التوقعات.. غريزمان لم يوافق',
-    },
-    {
-      slideimg: 'https://f.top4top.net/p_834l05su1.jpg',
-      title: 'وداع مؤثر للقحطاني بعد إعلان إعتزاله',
-    },
-  ];
 
 }

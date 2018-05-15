@@ -1,3 +1,38 @@
 page-news {
+  .ion-content {
+    background-color: color($colors, body);
+  }
 
+  .ion-item {
+    direction: rtl;
+    background-color: color($colors, light);
+  }
+
+  img {
+    direction: rtl;
+    border-radius: 2px;
+  }
+
+  h1 {
+    direction: rtl;
+    font-family: sukar-Regular;
+  }
+
+  p {
+    direction: rtl;
+    font-family: Sukar-Regular;
+    padding-top: 7px;
+  }
+
+  .square {
+    font-size: 5px;
+  }
+
+  .time {
+    font-size: 0.800em;
+    padding-right: 0.600em
+  }
+  .writer{
+    font-size: 1.1em;
+  }
 }

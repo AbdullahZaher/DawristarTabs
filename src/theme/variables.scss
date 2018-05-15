@@ -13,7 +13,18 @@ $app-direction: ltr;
 
 
 @import "ionic.globals";
-
+@font-face {
+  font-family: sukar-Bold;
+  src: url(../assets/fonts/sukar-Bold.ttf);
+}
+@font-face {
+  font-family: sukar-Regular;
+  src: url(../assets/fonts/sukar-Regular.ttf);
+}
+@font-face {
+  font-family: Lateef;
+  src: url(../assets/fonts/Lateef.ttf);
+}
 
 // Shared Variables
 // --------------------------------------------------

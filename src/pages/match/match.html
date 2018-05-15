@@ -1,1 +1,110 @@
-<ion-content id="page6" style="background-color:#FFFFFF;"></ion-content>
+<ion-header color="dark">
+<ion-toolbar padding color="dark">
+    <ion-segment [(ngModel)]="matchOf">
+    <ion-segment-button value="today" (click)="showToday = !showToday">
+        <ion-icon name="flame"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="yesterday">
+        <ion-icon name="arrow-back"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="tommorow">
+        <ion-icon name="arrow-forward"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="calendar">
+        <ion-icon name="calendar"></ion-icon>
+    </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
+</ion-header>
+<ion-content id="page6" class="ion-content">
+
+<div *ngFor="let item of getItems(matchOf)">
+    <div [hidden]=item.hide>
+
+    <ion-grid *ngIf="item.col == 'matchitemsToday'">
+        <ion-row class="grid-css" *ngFor="let match of matchitemsToday | async" (click)="showMatchInfo(match)">
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.away}}
+        </ion-col>
+        <ion-col class="match-time" col-2>
+            <div class="match-time-text">{{match.time}}</div>
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.home}}
+        </ion-col>
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
+        </ion-col>
+        {{match.da}}
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="item.col == 'matchitemsYesterday'">
+        <ion-row class="grid-css" *ngFor="let match of matchitemsYesterday | async" (click)="showMatchInfo(match)">
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.away}}
+        </ion-col>
+        <ion-col class="match-time" col-2>
+            <div class="match-time-text">{{match.time}}</div>
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.home}}
+        </ion-col>
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
+        </ion-col>
+        {{match.da}}
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="item.col == 'matchitemsTomorrow'">
+        <ion-row class="grid-css" *ngFor="let match of matchitemsTomorrow | async" (click)="showMatchInfo(match)">
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.away}}
+        </ion-col>
+        <ion-col class="match-time" col-2>
+            <div class="match-time-text">{{match.time}}</div>
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.home}}
+        </ion-col>
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
+        </ion-col>
+        {{match.da}}
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="item.col == 'matchitemsAll'">
+        <ion-row class="grid-css" *ngFor="let match of matchitemsAll | async" (click)="showMatchInfo(match)">
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.away}}
+        </ion-col>
+        <ion-col class="match-time" col-2>
+            <div class="match-time-text">{{match.time}}</div>
+        </ion-col>
+        <ion-col class="grid-text">
+            {{match.home}}
+        </ion-col>
+        <ion-col col-1>
+            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
+        </ion-col>
+        {{match.da}}
+        </ion-row>
+    </ion-grid>
+
+    </div>
+</div>
+</ion-content>
