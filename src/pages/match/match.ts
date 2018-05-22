@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import { NavController, NavParams } from 'ionic-angular';
 
 // Connect Page with Firebase
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
+
+import { ViewmatchPage } from '../viewmatch/viewmatch';
 
 // Matches interface
 interface Matinf {
@@ -32,12 +33,13 @@ let yesterday = moment().subtract(1, 'day').format('YYYY-MM-DD').toString();
 })
 export class MatchPage {
   matchOf = 'today';
+  nomatch = true;
 
   match: any = {
     'today': [
       {
         hide: false,
-        col: 'matchitemsToday'
+        col: 'matchToday'
       }
     ],
     'yesterday': [
@@ -87,39 +89,36 @@ export class MatchPage {
 
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams, public afs: AngularFirestore, 
-    public statBar: StatusBar, public platform: Platform) { 
-      this.platform= platform;
-      this.platform.ready().then( () => {
-        this.statBar.overlaysWebView(true);
-        this.statBar.backgroundColorByHexString('#d1d1d1');
+    public navParams: NavParams, public afs: AngularFirestore) { 
+
+      this.matchesColToday = this.afs.collection('matches', ref => {
+        return ref.where('day', '==', now).orderBy('time');
       });
+        this.matchitemsToday = this.matchesColToday.valueChanges();
+
+      this.matchesColYesterday = this.afs.collection('matches', ref => {
+        return ref.where('day', '==', yesterday).orderBy('time');
+      });
+        this.matchitemsYesterday = this.matchesColYesterday.valueChanges();
+  
+      this.matchesColTomorrow = this.afs.collection('matches', ref => {
+        return ref.where('day', '==', tomorrow).orderBy('time');
+      });
+        this.matchitemsTomorrow = this.matchesColTomorrow.valueChanges();
+      
+      this.matchesColAll = this.afs.collection('matches', ref => {
+        return ref.orderBy('day').orderBy('time');
+      });
+        this.matchitemsAll = this.matchesColAll.valueChanges();
     }
+  
+    showMatchInfo(matchitem) {
+      this.navCtrl.push(ViewmatchPage, matchitem);
+  }
 
   getItems(type: any) {
     return this.match[type];
   }
 
-  ngOnInit() {
-    this.matchesColToday = this.afs.collection('matches', ref => {
-      return ref.where('day', '==', now)
-    });
-      this.matchitemsToday = this.matchesColToday.valueChanges();
-
-    this.matchesColYesterday = this.afs.collection('matches', ref => {
-      return ref.where('day', '==', yesterday)
-    });
-      this.matchitemsYesterday = this.matchesColYesterday.valueChanges();
-
-      
-    this.matchesColTomorrow = this.afs.collection('matches', ref => {
-      return ref.where('day', '==', tomorrow)
-    });
-      this.matchitemsTomorrow = this.matchesColTomorrow.valueChanges();
     
-    this.matchesColAll = this.afs.collection('matches', ref => {
-      return ref.orderBy('day').orderBy('time');
-    });
-      this.matchitemsAll = this.matchesColAll.valueChanges();
-  }
 }

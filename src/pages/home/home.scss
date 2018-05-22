@@ -7,7 +7,9 @@ page-home {
   .scroll-bar-indicator{
 	  display: none;
   }
-
+  ion-header {
+    background-color: color($colors, dark);
+  }
 
   .ion-content {
     background-color: color($colors, body);
@@ -82,9 +84,13 @@ page-home {
   .DateText {
     display: inline-block;
     font-family: sukar-Regular;
-    font-weight: bold;
     color: #f2f2f2;
     padding-right: 2px;
+    font-size: 1.2em;
+  }
+
+  .fafire{
+    color: gold;
   }
 
   .match-grid {
@@ -101,6 +107,14 @@ page-home {
     background: -webkit-linear-gradient(90deg, rgb(233, 227, 227) 0, rgb(255, 255, 255) 100%);
     background: -moz-linear-gradient(0deg, rgb(233, 227, 227) 0, rgb(255, 255, 255) 100%);
     background: linear-gradient(0deg, rgb(233, 227, 227) 0, rgb(255, 255, 255) 100%);
+    z-index: 1;
+  }
+  .nomatchestoday{
+    font-family: sukar-Regular;
+    text-align: center;
+    font-size: 1.2em;
+    direction: rtl;
+    color: color($colors, primary);
   }
 
   .grid-text{
@@ -133,13 +147,13 @@ page-home {
     position: relative;
     text-align: right;
     width: 100%;
-    direction: rtl;
   }
   .card-ul {
     list-style-type: none;
     position: absolute;
-    bottom: 8%;
-    right: 0;
+    bottom: 0;
+    right: 10px;
+    left: -10px;
   }
   .card-title-news {
     direction: rtl;
@@ -152,33 +166,6 @@ page-home {
     font-size: 1em;
     color: #f2f2f2;
     font-family: Lateef;
-  }
-
-  .card-details-view {
-    position: absolute;
-    bottom: 3%;
-    left: 15px;
-    color: color($colors, dark);
-    opacity: 0.5;
-    z-index: 1;
-  }
-
-  .card-details-thumbs {
-    position: absolute;
-    bottom: 3%;
-    left: 70px;
-    color: color($colors, dark);
-    opacity: 0.5;
-    z-index: 1;
-  }
-
-  .card-details-comments {
-    position: absolute;
-    bottom: 3%;
-    left: 120px;
-    color: color($colors, dark);
-    opacity: 0.5;
-    z-index: 1;
   }
 
   .card-news-background {
@@ -202,4 +189,5 @@ page-home {
     width: 100%;
     content: '';
   }
+  
 }

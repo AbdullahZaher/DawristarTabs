@@ -2,7 +2,12 @@ page-match {
   .scroll-bar-indicator{
 	  display: none;
   }
-
+  ion-toolbar {
+    margin-top: 25px;
+  }
+  ion-header {
+    background-color: color($colors, dark);
+  }
   .ion-content {
     background-color: color($colors, body);
   }
@@ -17,6 +22,7 @@ page-match {
     padding-right: 20px;
     margin: 1px auto;
     border-radius: 4px;
+    z-index: 1;
   }
 
   .DateText {
@@ -25,10 +31,12 @@ page-match {
     font-weight: bold;
     color: #f2f2f2;
     padding-right: 2px;
+    z-index: 1;
   }
 
   .match-grid {
     color: #ffffff;
+    z-index: 1;
   }
 
   .grid-css {
@@ -41,6 +49,7 @@ page-match {
     background: -webkit-linear-gradient(90deg, rgb(233, 227, 227) 0, rgb(255, 255, 255) 100%);
     background: -moz-linear-gradient(0deg, rgb(233, 227, 227) 0, rgb(255, 255, 255) 100%);
     background: linear-gradient(0deg, rgb(233, 227, 227) 0, rgb(255, 255, 255) 100%);
+    z-index: 1;
   }
 
   .grid-text{
@@ -50,6 +59,7 @@ page-match {
     padding-top: 10px;
     font-size: 0.850em;
     font-family: sukar-Regular;
+    z-index: 1;
   }
 
   .match-time{
@@ -59,6 +69,7 @@ page-match {
     margin: 0 auto;
     text-align: center;
     font-size: 12px;
+    z-index: 1;
   }
 
   .match-time-text{
@@ -68,6 +79,7 @@ page-match {
     font-size: 0.700em;
     font-weight: bold;
     color: white;
+    z-index: 1;
   }
 
   .clublogo{
@@ -80,5 +92,13 @@ page-match {
     position: absolute;
     left: 2px;
     width: 33px;
+    z-index: 1;
+  }
+  .nomatchestoday{
+    font-family: sukar-Regular;
+    text-align: center;
+    font-size: 1.2em;
+    direction: rtl;
+    color: color($colors, primary);
   }
 }

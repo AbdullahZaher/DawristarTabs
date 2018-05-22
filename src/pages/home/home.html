@@ -1,3 +1,4 @@
+<ion-header></ion-header>
 <ion-content id="home" class="ion-content">
     <ion-slides [speed]="500" [loop]="true" pager class="sliderNews">
         <ion-slide *ngFor="let slides of items | async">
@@ -6,16 +7,17 @@
         </ion-slide>
       </ion-slides>
     
-      <ion-grid>
+      <ion-grid *ngIf="(matchitems | async) as matches; else loading">
         <ion-row>
           <ion-col no-padding>
-            <div class="DateBox"><i class="fa fa-calendar"></i>  <div class="DateText"> مباريات اليوم </div></div>
+            <div class="DateBox"><i class="fa fa-fire fafire"></i>  <div class="DateText"> مباريات اليوم </div></div>
           </ion-col>
         </ion-row>
-    
-        <ion-row class="grid-css" *ngFor="let match of matchitems | async" (click)="showMatchInfo(match)">
+        
+        <div *ngIf="matches.length > 0; else nomatches">
+        <ion-row class="grid-css" *ngFor="let match of matches" (click)="showMatchInfo(match)">
           <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
+            <img width="50px" height="25px" src="assets/img/teamsicon/{{match.away_bdg}}.png">
           </ion-col>
           <ion-col class="grid-text">
             {{match.away}}
@@ -27,12 +29,19 @@
             {{match.home}}
           </ion-col>
           <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
+            <img width="50px" height="25px" src="assets/img/teamsicon/{{match.home_bdg}}.png">
           </ion-col>
         </ion-row>
-    
+        </div>
       </ion-grid>
-    
+      <ng-template #nomatches>
+          <span class="nomatchestoday">لاتوجد مباريات اليوم 🙄⚽️</span>
+      </ng-template>
+
+      <ng-template #loading>
+        <span class="nomatchestoday">جاري تحميل جدول المباريات ...</span>
+      </ng-template>
+
       <ion-card *ngFor="let item of items | async">
         <div class="card-news-image" *ngIf=item.isShown (click)="showNewsInfo(item)">
         <img [src]="item.img"/>
@@ -41,8 +50,5 @@
           <li class="card-title-news"> {{item.title}} </li>
           <li class="card-subtitle-news" [innerHTML]="item.desc"></li>
         </ul>
-          <div class="card-details-view">{{item.newsViews}} <i class="fa fa-eye" aria-hidden="true"></i></div>
-          <div class="card-details-thumbs">{{item.newsLikes}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></div>
-          <div class="card-details-comments">121 <i class="fa fa-comments-o" aria-hidden="true"></i></div>
       </ion-card>
 </ion-content>

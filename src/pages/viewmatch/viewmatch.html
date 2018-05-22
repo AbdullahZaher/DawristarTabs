@@ -1,0 +1,120 @@
+<ion-header #head>
+  <ion-icon class="backicon" name="arrow-back" (click)="goBack()"></ion-icon>
+</ion-header>
+
+<ion-content class="ion-content" autohide [header]="head">
+<div class="match-card">
+  <div class="homeimg">
+      <img width="60px" height="60px" src="assets/img/teamsicon/{{matchInfo.home_bdg}}.png">
+      <p class="teams">{{matchInfo.home}}</p>
+  </div>
+
+  <div class="awayimg">
+      <img width="60px" height="60px"  src="assets/img/teamsicon/{{matchInfo.away_bdg}}.png">
+      <p class="teams">{{matchInfo.away}}</p>
+  </div>
+</div>
+
+<div>
+    <p class="day">{{matchInfo.day | amLocale:'ar-sa' | amDateFormat: 'dddd D-M-YYYY' }}</p>
+</div>
+
+<div>
+    <p class="time">{{matchInfo.time}}</p>
+</div>
+
+<ion-grid class="player-info-grid">
+  <ion-row>
+    <ion-col class="player-info-col" (click)="showAway()">{{matchInfo.away}}</ion-col>
+    <ion-col class="player-info-col" (click)="showHome()">{{matchInfo.home}}</ion-col>
+  </ion-row>
+</ion-grid>
+<div [hidden]=hidehome>
+  
+  <ion-card>
+    <h2 class="team-not-ready-h2" text-wrap>تشكيلة فريق {{matchInfo.home}} غير جاهزة</h2>
+    <img class="team-not-ready-img" src="assets/img/top-players.png" />
+  </ion-card>
+
+  <ion-scroll scrollX="true" pager="true" style="white-space: nowrap; height: 320px;" [hidden]=hometeamava>
+    <ion-card>
+      <div class="name">
+        <h2 text-wrap>Messi</h2>
+        <h1>10</h1>
+      </div>
+      <img class="player-img" src="https://www.futwiz.com/assets/img/fifa18/faces/117598535.png" />
+    </ion-card>
+  </ion-scroll>
+  
+</div>
+<div [hidden]=hideaway>
+  <ion-card>
+    <h2 class="team-not-ready-h2" text-wrap>تشكيلة فريق {{matchInfo.away}} غير جاهزة</h2>
+    <img class="team-not-ready-img" src="assets/img/top-players.png" />
+  </ion-card>
+
+  <ion-scroll scrollX="true" pager="true" style="white-space: nowrap; height: 320px;" [hidden]=awayteamava>
+    <ion-card>
+      <div class="name">
+        <h2 text-wrap>Messi</h2>
+        <h1>10</h1>
+      </div>
+      <img class="player-img" src="https://www.futwiz.com/assets/img/fifa18/faces/117598535.png" />
+    </ion-card>
+  </ion-scroll>
+
+</div>
+
+<ion-grid>
+  <ion-row>
+    <ion-col class="col-css">
+      المعلقين
+    </ion-col>
+    <ion-col class="col-css">
+      الحكم
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="row-css">
+    <ion-col>
+      {{matchInfo.comm}}
+    </ion-col>
+    <ion-col>
+      {{matchInfo.ref}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col class="col-css">
+      سعة الملعب
+    </ion-col>
+    <ion-col class="col-css">
+      المعلب
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="row-css">
+    <ion-col>
+      متفرج {{matchInfo.audi}}
+    </ion-col>
+    <ion-col>
+      {{matchInfo.field}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col class="col-css">
+      القنوات الناقلة
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row class="row-css">
+    <ion-col>
+      {{matchInfo.tv}}
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
+
+</ion-content>

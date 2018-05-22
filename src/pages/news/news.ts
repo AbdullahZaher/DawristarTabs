@@ -5,6 +5,9 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { ViewnewsPage } from '../viewnews/viewnews';
+import { ViewtopicPage } from '../viewtopic/viewtopic';
+
 // News interface
 interface Newsinf {
   title: string;
@@ -97,4 +100,10 @@ export class NewsPage {
     this.artitems = this.artCol.valueChanges();
   }
   
+  showNewsInfo(item){
+    this.navCtrl.push(ViewnewsPage, item);
+  }
+  showTopicInfo(item) {
+    this.navCtrl.push(ViewtopicPage, item);
+  }
 }

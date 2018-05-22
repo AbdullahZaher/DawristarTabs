@@ -2,7 +2,12 @@ page-news {
   .ion-content {
     background-color: color($colors, body);
   }
-
+  ion-toolbar {
+    margin-top: 25px;
+  }
+  ion-header {
+    background-color: color($colors, dark);
+  }
   .ion-item {
     direction: rtl;
     background-color: color($colors, light);

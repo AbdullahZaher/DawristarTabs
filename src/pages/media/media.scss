@@ -3,6 +3,11 @@ page-media {
         background-color: color($colors, body);
     }
     
+    .top-space {
+        background-color: color($colors, body);
+        height: 30px;
+    }
+
     .scroll-bar-indicator{
           display: none;
     }
@@ -10,37 +15,32 @@ page-media {
     .masonry { /* Masonry container */
         column-count: 2;
         column-gap: 2px;
-    }
 
+    }
+    img {
+        border-radius: 8px!important;
+    }
     .item { /* Masonry bricks or child elements */
         background-color: color($colors, body);
         display: inline-block;
         margin: 2px;
         width: 100%;
-    }
-    html {
-    box-sizing: border-box;
-    }
 
-    *,
-    *:before,
-    *:after {
-    box-sizing: inherit;
-    border-radius: 10px;
     }
 
     /* The Masonry Container */
     .masonry {
-    margin: 5px;
+    margin: 6px;
     max-width: 768px;
-    column-gap: 2px;
+    column-gap: 3px;
+    margin-top: 20px;
     }
 
     /* The Masonry Brick */
     .item {
     background-color: color($colors, body);
     padding: 2px;
-    margin: 0 0 2px;
+    margin: 0 0 0;
     }
 
     /* Masonry on large screens */

@@ -1,110 +1,154 @@
-<ion-header color="dark">
-<ion-toolbar padding color="dark">
-    <ion-segment [(ngModel)]="matchOf">
-    <ion-segment-button value="today" (click)="showToday = !showToday">
-        <ion-icon name="flame"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="yesterday">
-        <ion-icon name="arrow-back"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="tommorow">
-        <ion-icon name="arrow-forward"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="calendar">
-        <ion-icon name="calendar"></ion-icon>
-    </ion-segment-button>
-    </ion-segment>
-</ion-toolbar>
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-segment [(ngModel)]="matchOf">
+        <ion-segment-button value="today" (click)="showToday = !showToday">
+            <ion-icon name="flame"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="yesterday">
+            <ion-icon name="arrow-back"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="tommorow">
+            <ion-icon name="arrow-forward"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="calendar">
+            <ion-icon name="calendar"></ion-icon>
+        </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 <ion-content id="page6" class="ion-content">
 
 <div *ngFor="let item of getItems(matchOf)">
-    <div [hidden]=item.hide>
+<div [hidden]=item.hide>
 
-    <ion-grid *ngIf="item.col == 'matchitemsToday'">
-        <ion-row class="grid-css" *ngFor="let match of matchitemsToday | async" (click)="showMatchInfo(match)">
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.away}}
-        </ion-col>
-        <ion-col class="match-time" col-2>
-            <div class="match-time-text">{{match.time}}</div>
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.home}}
-        </ion-col>
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
-        </ion-col>
-        {{match.da}}
+
+<div *ngIf="item.col == 'matchToday'">
+  <ion-grid *ngIf="(matchitemsToday | async) as matches; else loading">
+     <div *ngIf="matches.length > 0; else nomatches">
+        <ion-row class="grid-css" *ngFor="let match of matches" (click)="showMatchInfo(match)">
+            <ion-col col-1>
+                <img width="50px" height="25px" src="assets/img/teamsicon/{{match.away_bdg}}.png">
+            </ion-col>
+            <ion-col class="grid-text">
+                {{match.away}}
+            </ion-col>
+            <ion-col class="match-time" col-2>
+                <div class="match-time-text">{{match.time}}</div>
+            </ion-col>
+            <ion-col class="grid-text">
+                {{match.home}}
+            </ion-col>
+            <ion-col col-1>
+                <img width="50px" height="25px" src="assets/img/teamsicon/{{match.home_bdg}}.png">
+            </ion-col>
+              {{match.da}}
         </ion-row>
+      </div>
+        <ng-template #nomatches>
+            <span class="nomatchestoday">لاتوجد مباريات اليوم 🙄⚽️</span>
+        </ng-template>
     </ion-grid>
+        <ng-template #loading>
+            <span class="nomatchestoday">جاري تحميل جدول المباريات ...</span>
+        </ng-template>
+</div>
 
-    <ion-grid *ngIf="item.col == 'matchitemsYesterday'">
-        <ion-row class="grid-css" *ngFor="let match of matchitemsYesterday | async" (click)="showMatchInfo(match)">
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.away}}
-        </ion-col>
-        <ion-col class="match-time" col-2>
-            <div class="match-time-text">{{match.time}}</div>
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.home}}
-        </ion-col>
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
-        </ion-col>
-        {{match.da}}
-        </ion-row>
+
+<div *ngIf="item.col == 'matchitemsYesterday'">
+    <ion-grid *ngIf="(matchitemsYesterday | async) as matches; else loading">
+        <div *ngIf="matches.length > 0; else nomatches">
+            <ion-row class="grid-css" *ngFor="let match of matches" (click)="showMatchInfo(match)">
+                <ion-col col-1>
+                    <img width="50px" height="25px" src="assets/img/teamsicon/{{match.away_bdg}}.png">
+                </ion-col>
+                <ion-col class="grid-text">
+                    {{match.away}}
+                </ion-col>
+                <ion-col class="match-time" col-2>
+                    <div class="match-time-text">{{match.time}}</div>
+                </ion-col>
+                <ion-col class="grid-text">
+                    {{match.home}}
+                </ion-col>
+                <ion-col col-1>
+                    <img width="50px" height="25px" src="assets/img/teamsicon/{{match.home_bdg}}.png">
+                </ion-col>
+                    {{match.da}}
+            </ion-row>
+        </div>
+            <ng-template #nomatches>
+                <span class="nomatchestoday">لاتوجد مباريات اليوم 🙄⚽️</span>
+            </ng-template>
     </ion-grid>
+            <ng-template #loading>
+                <span class="nomatchestoday">جاري تحميل جدول المباريات ...</span>
+            </ng-template>
+</div>
 
-    <ion-grid *ngIf="item.col == 'matchitemsTomorrow'">
-        <ion-row class="grid-css" *ngFor="let match of matchitemsTomorrow | async" (click)="showMatchInfo(match)">
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.away}}
-        </ion-col>
-        <ion-col class="match-time" col-2>
-            <div class="match-time-text">{{match.time}}</div>
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.home}}
-        </ion-col>
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
-        </ion-col>
-        {{match.da}}
-        </ion-row>
+<div *ngIf="item.col == 'matchitemsTomorrow'">
+    <ion-grid *ngIf="(matchitemsTomorrow | async) as matches; else loading">
+        <div *ngIf="matches.length > 0; else nomatches">
+            <ion-row class="grid-css" *ngFor="let match of matches" (click)="showMatchInfo(match)">
+                <ion-col col-1>
+                    <img width="50px" height="25px" src="assets/img/teamsicon/{{match.away_bdg}}.png">
+                </ion-col>
+                <ion-col class="grid-text">
+                    {{match.away}}
+                </ion-col>
+                <ion-col class="match-time" col-2>
+                    <div class="match-time-text">{{match.time}}</div>
+                </ion-col>
+                <ion-col class="grid-text">
+                    {{match.home}}
+                </ion-col>
+                <ion-col col-1>
+                      <img width="50px" height="25px" src="assets/img/teamsicon/{{match.home_bdg}}.png">
+                </ion-col>
+                    {{match.da}}
+            </ion-row>
+        </div>
+            <ng-template #nomatches>
+                <span class="nomatchestoday">لاتوجد مباريات اليوم 🙄⚽️</span>
+            </ng-template>
     </ion-grid>
+            <ng-template #loading>
+                <span class="nomatchestoday">جاري تحميل جدول المباريات ...</span>
+            </ng-template>
+</div>
 
-    <ion-grid *ngIf="item.col == 'matchitemsAll'">
-        <ion-row class="grid-css" *ngFor="let match of matchitemsAll | async" (click)="showMatchInfo(match)">
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.away_bdg}}.png">
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.away}}
-        </ion-col>
-        <ion-col class="match-time" col-2>
-            <div class="match-time-text">{{match.time}}</div>
-        </ion-col>
-        <ion-col class="grid-text">
-            {{match.home}}
-        </ion-col>
-        <ion-col col-1>
-            <img width="50px" height="25px" src="../../assets/img/teamsicon/{{match.home_bdg}}.png">
-        </ion-col>
-        {{match.da}}
-        </ion-row>
+<div *ngIf="item.col == 'matchitemsAll'">
+    <ion-grid *ngIf="(matchitemsAll | async) as matches; else loading">
+        <div *ngIf="matches.length > 0; else nomatches">
+            <ion-row class="grid-css" *ngFor="let match of matches" (click)="showMatchInfo(match)">
+                <ion-col col-1>
+                    <img width="50px" height="25px" src="assets/img/teamsicon/{{match.away_bdg}}.png">
+                </ion-col>
+                <ion-col class="grid-text">
+                    {{match.away}}
+                </ion-col>
+                <ion-col class="match-time" col-2>
+                    <div class="match-time-text">{{match.time}}</div>
+                </ion-col>
+                <ion-col class="grid-text">
+                    {{match.home}}
+                </ion-col>
+                <ion-col col-1>
+                    <img width="50px" height="25px" src="assets/img/teamsicon/{{match.home_bdg}}.png">
+                </ion-col>
+                    {{match.da}}
+            </ion-row>
+        </div>
+            <ng-template #nomatches>
+                <span class="nomatchestoday">لاتوجد مباريات اليوم 🙄⚽️</span>
+            </ng-template>
     </ion-grid>
+            <ng-template #loading>
+                <span class="nomatchestoday">جاري تحميل جدول المباريات ...</span>
+            </ng-template>
+</div>
 
-    </div>
+   
+
+</div>
 </div>
 </ion-content>

@@ -1,9 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+
 // Connect Page with Firebase
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+
+import { ViewnewsPage } from '../viewnews/viewnews';
+import { ViewmatchPage } from '../viewmatch/viewmatch';
 
 import * as moment from 'moment';
 
@@ -81,7 +86,11 @@ export class HomePage {
   tag: string;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams, public afs: AngularFirestore) {}
+    public navParams: NavParams, public afs: AngularFirestore,
+    private statusBar: StatusBar) {
+      this.statusBar.hide();
+      this.statusBar.overlaysWebView(true);
+    }
 
   ngOnInit() {
     this.newsCol = this.afs.collection('news', ref => {
@@ -90,9 +99,16 @@ export class HomePage {
     this.items = this.newsCol.valueChanges();
 
     this.matchesCol = this.afs.collection('matches', ref => {
-      return ref.where('day', '==', now)
+      return ref.where('day', '==', now).orderBy('time');
     });
     this.matchitems = this.matchesCol.valueChanges();
+  }
+
+  showNewsInfo(item) {
+    this.navCtrl.push(ViewnewsPage, item);
+  }
+  showMatchInfo(matchitem) {
+    this.navCtrl.push(ViewmatchPage, matchitem);
   }
 
 }

@@ -11,7 +11,9 @@ import { MatchPage } from '../pages/match/match';
 import { NewsPage } from '../pages/news/news';
 import { HashtagPage } from '../pages/hashtag/hashtag';
 import { MediaPage } from '../pages/media/media';
-
+import { ViewmatchPage } from '../pages/viewmatch/viewmatch';
+import { ViewnewsPage } from '../pages/viewnews/viewnews';
+import { ViewtopicPage } from '../pages/viewtopic/viewtopic';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,6 +25,10 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 
 // Moment
 import { MomentModule } from 'ngx-moment';
+// Autohide icon
+import { AutohideDirective } from '../directives/autohide/autohide';
+
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 
 @NgModule({
@@ -33,7 +39,11 @@ import { MomentModule } from 'ngx-moment';
     MatchPage,
     NewsPage,
     HashtagPage,
-    MediaPage
+    MediaPage,
+    ViewmatchPage,
+    ViewnewsPage,
+    ViewtopicPage,
+    AutohideDirective
   ],
   imports: [
     BrowserModule,
@@ -41,7 +51,8 @@ import { MomentModule } from 'ngx-moment';
     AngularFireModule.initializeApp(environment.firebaseconfig),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    MomentModule
+    MomentModule,
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,7 +62,10 @@ import { MomentModule } from 'ngx-moment';
     MatchPage,
     NewsPage,
     HashtagPage,
-    MediaPage
+    MediaPage,
+    ViewmatchPage,
+    ViewnewsPage,
+    ViewtopicPage
   ],
   providers: [
     StatusBar,
