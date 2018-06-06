@@ -1,32 +1,71 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Slides, Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
+// Connect Page with Firebase
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+interface mediaInterface {
+  title: string;
+  comment: string;
+  file: string;
+  link: string;
+}
 @Component({
   selector: 'page-media',
   templateUrl: 'media.html'
 })
 export class MediaPage {
-  // this tells the tabs component which Pages
-  // should be each tab's root Page
-  constructor(public navCtrl: NavController) {
-  }
-  
-  medias = [
-    {
-      img:'https://i2-prod.mirror.co.uk/incoming/article11843800.ece/ALTERNATES/s615b/THP_CHP_130118SLUG_1261JPG.jpg',
-      title:'ليفربول يمنح قميص الأسطورة لصفقته الجديدة',
-    },
-    {
-      img:'http://img.kooora.com/?i=reuters%2f2018-01-13%2f2018-01-13t132335z_326723634_rc12356bc180_rtrmadp_3_soccer-spain-fcb-mina_reuters.jpg',
-      title:'برشلونة يقدم ياري مينا للجماهير',
-    },
-    {
-      img:'http://img.kooora.com/?i=epa%2fsoccer%2f2018-01%2f2018-01-12%2f2018-01-12-06434110_epa.jpg',
-      title:'سوبر 2018 لحظة لن ينساها عاشور',
-    },
-    {
-      img:'http://img.kooora.com/?i=ali.18/2018/1/9/1/47FA3D7F00000578-0-image-a-13_1515586715083.jpg',
-      title:'محاولة فاشلة من رونالدو لخداع الجماهير',
-    },
-  ];
+  mediaCol: AngularFirestoreCollection<mediaInterface>;
+  mediaItems: Observable<mediaInterface[]>;
+  title: string;
+  comment: string;
+  file: string;
+  link: string;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, public afs: AngularFirestore,
+    private statusBar: StatusBar, private admob: AdMobFree,
+    private platform: Platform) {
+      this.statusBar.hide();
+      this.statusBar.overlaysWebView(true);
+    }
+    ionViewDidLoad(){
+      if(this.platform.is('android')){
+      const bannerConfig: AdMobFreeBannerConfig = {
+        id: 'ca-app-pub-1941434641274424/6258307936',
+        isTesting: false,
+        autoShow: true
+       };
+       this.admob.banner.config(bannerConfig);
+       
+       this.admob.banner.prepare()
+         .then(() => {
+        
+         })
+         .catch(e => console.log(e));
+      }
+
+        if (this.platform.is('ios')) {
+          const bannerConfig: AdMobFreeBannerConfig = {
+            id: 'ca-app-pub-1941434641274424/5453590202',
+            isTesting: false,
+            autoShow: true
+           };
+           this.admob.banner.config(bannerConfig);
+           
+           this.admob.banner.prepare()
+             .then(() => {
+            
+             })
+             .catch(e => console.log(e));
+        }
+    }
+    ngOnInit() {
+      this.mediaCol = this.afs.collection('media');
+      this.mediaItems = this.mediaCol.valueChanges();
+    }
 }

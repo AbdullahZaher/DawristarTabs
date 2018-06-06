@@ -1,7 +1,7 @@
 <ion-header></ion-header>
 <ion-content id="home" class="ion-content">
     <ion-slides [speed]="500" [loop]="true" pager class="sliderNews">
-        <ion-slide *ngFor="let slides of items | async">
+        <ion-slide *ngFor="let slides of slideItems | async">
           <img class="card-img" [src]="slides.slideImg" (click)="showNewsInfo(slides)">
           <div class="card-title"><span class="card-title-cat" [innerHTML]="slides.title" (click)="showNewsInfo(slides)"></span></div>
         </ion-slide>

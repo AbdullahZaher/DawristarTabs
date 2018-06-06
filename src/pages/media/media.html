@@ -1,7 +1,7 @@
 <ion-content id="page8" class="ion-content">
 <div class="masonry">
-    <div class="item" *ngFor="let media of medias">
-        <img [src]="media.img" imageViewer>
+    <div class="item" *ngFor="let media of mediaItems | async">
+        <img [src]="media.link" imageViewer>
     </div>
 </div>
 </ion-content>

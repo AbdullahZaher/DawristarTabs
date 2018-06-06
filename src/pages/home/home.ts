@@ -58,6 +58,9 @@ export class HomePage {
 
   newsCol: AngularFirestoreCollection<Newsinf>;
   items: Observable<Newsinf[]>;
+
+  newsSlide: AngularFirestoreCollection<Newsinf>;
+  slideItems: Observable<Newsinf[]>;
   title: string;
   img: string;
   slideImg: string;
@@ -129,6 +132,11 @@ export class HomePage {
     
 
   ngOnInit() {
+    this.newsSlide = this.afs.collection('news', ref => {
+      return ref.orderBy('newsDate', 'desc').where('isSlide', '==', true).limit(this.limit)
+    });
+    this.slideItems = this.newsSlide.valueChanges();
+
     this.newsCol = this.afs.collection('news', ref => {
       return ref.orderBy('newsDate', 'desc').limit(this.limit)
     });
