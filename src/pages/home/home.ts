@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides } from 'ionic-angular';
+import { NavController, NavParams, Slides, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 // Connect Page with Firebase
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
@@ -84,17 +85,52 @@ export class HomePage {
   tv: string;
   comm: string;
   tag: string;
-
+  limit = 20;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afs: AngularFirestore,
-    private statusBar: StatusBar) {
+    private statusBar: StatusBar, private admob: AdMobFree,
+    private platform: Platform) {
       this.statusBar.hide();
       this.statusBar.overlaysWebView(true);
     }
 
+    ionViewDidLoad(){
+      if(this.platform.is('android')){
+      const bannerConfig: AdMobFreeBannerConfig = {
+        id: 'ca-app-pub-1941434641274424/6258307936',
+        isTesting: false,
+        autoShow: true
+       };
+       this.admob.banner.config(bannerConfig);
+       
+       this.admob.banner.prepare()
+         .then(() => {
+        
+         })
+         .catch(e => console.log(e));
+        }
+
+        if (this.platform.is('ios')) {
+          const bannerConfig: AdMobFreeBannerConfig = {
+            id: 'ca-app-pub-1941434641274424/5453590202',
+            isTesting: false,
+            autoShow: true
+           };
+           this.admob.banner.config(bannerConfig);
+           
+           this.admob.banner.prepare()
+             .then(() => {
+            
+             })
+             .catch(e => console.log(e));
+            }
+        }
+
+    
+
   ngOnInit() {
     this.newsCol = this.afs.collection('news', ref => {
-      return ref.orderBy('newsDate', 'desc')
+      return ref.orderBy('newsDate', 'desc').limit(this.limit)
     });
     this.items = this.newsCol.valueChanges();
 
@@ -102,7 +138,9 @@ export class HomePage {
       return ref.where('day', '==', now).orderBy('time');
     });
     this.matchitems = this.matchesCol.valueChanges();
+
   }
+  
 
   showNewsInfo(item) {
     this.navCtrl.push(ViewnewsPage, item);

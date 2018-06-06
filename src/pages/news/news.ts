@@ -81,6 +81,8 @@ export class NewsPage {
   date: string;
   id?: any;
   
+  limit = 100;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
      public afs: AngularFirestore) {}
 
@@ -90,12 +92,12 @@ export class NewsPage {
 
   ngOnInit() {
     this.newsCol = this.afs.collection('news', ref => {
-      return ref.orderBy('newsDate', 'desc')
+      return ref.orderBy('newsDate', 'desc').limit(this.limit);
     });
     this.newsitems = this.newsCol.valueChanges();
 
     this.artCol = this.afs.collection('articles', ref => {
-      return ref.orderBy('date', 'desc')
+      return ref.orderBy('date', 'desc').limit(this.limit)
     });
     this.artitems = this.artCol.valueChanges();
   }

@@ -28,6 +28,8 @@ import { MomentModule } from 'ngx-moment';
 // Autohide icon
 import { AutohideDirective } from '../directives/autohide/autohide';
 
+import { AdMobFree } from '@ionic-native/admob-free';
+
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 
@@ -71,6 +73,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
+    AdMobFree,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

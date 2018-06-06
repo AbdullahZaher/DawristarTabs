@@ -109,8 +109,7 @@ page-viewmatch {
   
     ion-card {
       display: inline-block;
-      height: 300px;
-      border-radius: 20px!important;
+      border-radius: 6px!important;
       opacity: 0.8;
     }
      .player-img {
@@ -120,7 +119,6 @@ page-viewmatch {
   
     .team-not-ready-img {
       display: block;
-      margin-top: -60px;
     }
     .team-not-ready-h2 {
       margin: 20px 0 0 0;
